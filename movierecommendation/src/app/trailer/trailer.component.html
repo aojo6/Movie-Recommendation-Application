@@ -1,0 +1,43 @@
+<div class="container">
+    <h2>YouTube Trailer Integration</h2>
+  
+    <!--YouTube trailers search -->
+    <div class="search-section">
+      <input type="text" placeholder="Search for trailers on YouTube" #searchQuery />
+      <button (click)="searchTrailers(searchQuery.value)">Search Trailers</button>
+    </div>
+  
+    <!-- Display YouTube search-->
+    <div *ngIf="trailers.length > 0" class="results-section">
+      <h3>Search Results</h3>
+      <ul>
+        <li *ngFor="let trailer of trailers" class="result-item">
+          <img [src]="trailer.snippet.thumbnails.default.url" 
+               alt="{{ trailer.snippet.title }}" 
+               class="thumbnail" />
+          <a [href]="'https://www.youtube.com/watch?v=' + trailer.id.videoId" target="_blank" class="video-link">
+            {{ trailer.snippet.title }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Form to add or update trailer link in express -->
+    <div class="form-section">
+      <h3>{{ trailerExists ? 'Update Trailer Link' : 'Add New Trailer' }}</h3>
+      <input [(ngModel)]="movieId" placeholder="Enter Movie ID" /> 
+      <input [(ngModel)]="newTrailerLink" placeholder="Enter Trailer Link" />
+      
+      <div class="button-group">
+        <button *ngIf="!trailerExists" (click)="addTrailer()">Add Trailer</button>
+        <button *ngIf="trailerExists" (click)="updateTrailer()">Update Trailer</button>
+        <button *ngIf="trailerExists" (click)="deleteTrailer()" class="delete-button">Delete Trailer</button>
+      </div>
+    </div>
+  
+    <!-- Message if no trailers exist --><!--will work on further when mongodb component is linked from Dhruv-->
+    <div *ngIf="trailers.length === 0 && !trailerExists">
+      <p>No trailers available. Please add or search for a trailer.</p>
+    </div>
+  </div>
+  

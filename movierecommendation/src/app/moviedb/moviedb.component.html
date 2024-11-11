@@ -1,11 +1,40 @@
-<p>moviedb works!</p>
+
 <div>
     <button mat-button [matMenuTriggerFor]="menu">Menu</button>
     <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/home">Homepage</button>
-    <button mat-menu-item routerLink="/moviedb">Movie Database</button>
-    <button mat-menu-item routerLink="/recommendation">Recommendation Engine</button>
-    <button mat-menu-item routerLink="/reviews">Reviews</button>
-    <button mat-menu-item routerLink="/trailer">Trailer</button>
+      <button mat-menu-item routerLink="/home">Homepage</button>
+      <button mat-menu-item routerLink="/moviedb">Movie Database</button>
+      <button mat-menu-item routerLink="/recommendation">Recommendation Engine</button>
+      <button mat-menu-item routerLink="/reviews">Reviews</button>
+      <button mat-menu-item routerLink="/trailer">Trailer</button>
     </mat-menu>
   </div>
+
+  <div>
+    <h4>{{mode}}Movie DB Form</h4>
+    <form (ngSubmit)="onSubmit()" [formGroup]="studentForm">
+        <mat-form-field >
+            <input matInput placeholder="Movie Name" id="movie_name" formControlName="movie_Name" name="movie_name" >
+        </mat-form-field>
+
+        <mat-form-field >
+            <input matInput placeholder="Genre" id="genre" formControlName="genres" name="genre" >
+        </mat-form-field>
+    
+        <mat-form-field >
+            <input matInput placeholder="Release Year" id="year" formControlName="Year" name="year" >
+        </mat-form-field>
+
+        <mat-form-field >
+            <input matInput placeholder="Director" id="director" formControlName="author" name="director" >
+        </mat-form-field>
+
+        <mat-form-field >
+            <input matInput placeholder="Ratings & Review" id="rating_review" formControlName="Ratings" name="rating_review" >
+        </mat-form-field>
+    
+        <p>
+            <button type="submit" mat-raised-button color="primary">Submit</button>
+        </p>
+    </form>
+    </div>

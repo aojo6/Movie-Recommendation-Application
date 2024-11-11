@@ -1,71 +1,72 @@
-// src/app/trailer/trailer.component.ts
 import { Component } from '@angular/core';
+import { TrailerService } from './trailer.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { MovierecService } from '../movierec.service';
 
 @Component({
   selector: 'app-trailer',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [
+    FormsModule, 
+    HttpClientModule, 
+    CommonModule,
+    MatMenuModule,
+    MatButtonModule,
+    RouterModule 
+  ],
+  providers: [TrailerService],
   templateUrl: './trailer.component.html',
   styleUrls: ['./trailer.component.css']
 })
 export class TrailerComponent {
-  trailers: any[] = [];
-  movieId = ''; // stores movie id
-  newTrailerLink = ''; 
+  trailers: any[] = [];  // YouTube search results
+  savedTrailers: any[] = [];  // Saved trailers from backend
   trailerExists = false;
 
-  constructor(private movierecService: MovierecService) {}
+  constructor(private trailerService: TrailerService) {
+    this.loadSavedTrailers();  // Load saved trailers on component initialization
+  }
 
   // Search for YouTube trailers
   searchTrailers(query: string): void {
-    this.movierecService.searchTrailers(query).subscribe((response) => {
-      this.trailers = response.items; 
+    this.trailerService.searchTrailers(query).subscribe((response) => {
+      this.trailers = response.items;
       console.log(this.trailers);
     });
   }
 
-  // Adds a new trailer link
-  addTrailer(): void {
-    this.movierecService.addTrailerLink(this.movieId, this.newTrailerLink).subscribe(() => {
+  // Add trailer link to backend and update saved trailers
+  addTrailer(movieId: string, trailerLink: string): void {
+    this.trailerService.addTrailerLink(movieId, trailerLink).subscribe(() => {
       alert('Trailer link added successfully');
-      this.trailerExists = true;
-      this.clearFields();
-      this.refreshTrailers();
+      this.loadSavedTrailers();  // Reload saved trailers after adding
     });
   }
 
-  // Update an existing trailer link
-  updateTrailer(): void {
-    this.movierecService.updateTrailerLink(this.movieId, this.newTrailerLink).subscribe(() => {
-      alert('Trailer link updated successfully');
-      this.clearFields();
-      this.refreshTrailers();
+  // Load saved trailers from backend
+  loadSavedTrailers(): void {
+    this.trailerService.getTrailers().subscribe((trailers) => {
+      this.savedTrailers = trailers;
     });
   }
 
-  // Delete a trailer link
-  deleteTrailer(): void {
-    this.movierecService.deleteTrailerLink(this.movieId).subscribe(() => {
-      alert('Trailer link deleted');
-      this.trailerExists = false;
-      this.clearFields();
-      this.refreshTrailers();
-    });
+  // Edit a saved trailer
+  editTrailer(trailer: any): void {
+    // Fill form with selected trailer data to update
+    this.trailerExists = true;
+    // Set movieId and trailerLink with the trailer's current values for editing
+    // (Implement form controls to update based on these values)
   }
 
-  // Optionally refresh the list of trailers after an operation
-  refreshTrailers(): void {
-    this.movierecService.getTrailers().subscribe((trailers) => {
-      this.trailers = trailers;
+  // Delete a saved trailer
+  deleteTrailer(trailerId: string): void {
+    this.trailerService.deleteTrailerLink(trailerId).subscribe(() => {
+      alert('Trailer deleted successfully');
+      this.loadSavedTrailers();  // Reload saved trailers after deletion
     });
-  }
-
-  // Clear the form fields after an operation
-  clearFields(): void {
-    this.movieId = '';
-    this.newTrailerLink = '';
   }
 }

@@ -1,13 +1,12 @@
-// for trailer component
+// trailer.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root',
 })
-export class MovierecService {
+export class TrailerService {
   private apiKey = 'AIzaSyCXterhdrsNBlGjCxxTPBAuTRjNyeQxV94'; // my YouTube API key
   private apiUrl = 'https://www.googleapis.com/youtube/v3/search'; // YouTube API URL
   private backendUrl = 'http://localhost:8000/api/trailers'; // Express.js backend URL /api/trailers was added to the link for easy access of stored trailer link

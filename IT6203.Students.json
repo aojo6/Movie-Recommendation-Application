@@ -1,0 +1,33 @@
+[{
+  "_id": {
+    "$oid": "672ec65a5bec812e7c3a4263"
+  },
+  "movie_Name": "titanic",
+  "genres": "user2",
+  "Year": "222",
+  "author": "d",
+  "Ratings": "erf",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "673019f632926bfd028c7cf1"
+  },
+  "movie_Name": "titanic",
+  "genres": "user2",
+  "Year": "2003",
+  "author": "3333333",
+  "Ratings": "888",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6730c279f7789d7291f4a488"
+  },
+  "movie_Name": "33333dfdfdf",
+  "genres": "23",
+  "Year": "3",
+  "author": "4",
+  "Ratings": "5",
+  "__v": 0
+}]

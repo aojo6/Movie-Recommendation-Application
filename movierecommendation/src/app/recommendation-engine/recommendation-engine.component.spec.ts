@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecommendationEngineComponent } from './recommendation-engine.component';
+import { MovieRecommendationEngineComponent } from './recommendation-engine.component';
 
-describe('RecommendationEngineComponent', () => {
-  let component: RecommendationEngineComponent;
-  let fixture: ComponentFixture<RecommendationEngineComponent>;
+describe('MovieRecommendationEngineComponent', () => {
+  let component: MovieRecommendationEngineComponent;
+  let fixture: ComponentFixture<MovieRecommendationEngineComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RecommendationEngineComponent]
-    })
-    .compileComponents();
+      imports: [MovieRecommendationEngineComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(RecommendationEngineComponent);
+    fixture = TestBed.createComponent(MovieRecommendationEngineComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

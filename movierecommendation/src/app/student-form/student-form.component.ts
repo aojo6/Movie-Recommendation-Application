@@ -6,6 +6,8 @@ import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { StudentService } from '../student.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { NavigationMenuComponent } from "../navigation-menu/navigation-menu.component";
 
 @Component({
   selector: 'app-student-form',
@@ -14,15 +16,17 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    ReactiveFormsModule
-  ],
+    CommonModule,
+    ReactiveFormsModule,
+    NavigationMenuComponent
+],
   templateUrl: './student-form.component.html',
   styleUrls: ['./student-form.component.css']
 })
 export class StudentFormComponent implements OnInit {
   public mode = 'Add'; // Default mode
   private id: any; // Student ID
-  private student: any;
+  public student: any;
 
   // Form group initialization
   studentForm = new FormGroup({
@@ -35,6 +39,10 @@ export class StudentFormComponent implements OnInit {
 
   // Initialize the call using StudentService 
   constructor(private _myService: StudentService, private router: Router, public route: ActivatedRoute) {}
+
+  onDelete(studentId: string) {
+    this._myService.deleteStudent(studentId);
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe((paramMap: ParamMap) => {

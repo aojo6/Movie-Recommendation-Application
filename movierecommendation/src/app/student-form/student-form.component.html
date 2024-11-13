@@ -1,9 +1,18 @@
-
-
 <div class="form-container">
     <div class="form-header">
         <h4>{{mode}} Movie DB Form</h4>
     </div>
+    
+    <div class="action-buttons">
+        <button mat-menu-item routerLink="editStudent/:_id">EDIT</button>
+        <button mat-button color="warn" (click)="onDelete(student._id)">DELETE</button>
+        
+    </div>
+
+    <div class="action-buttons">
+        <app-navigation-menu></app-navigation-menu>
+    </div>
+
     <form (ngSubmit)="onSubmit()" [formGroup]="studentForm">
         <div class="form-row">
             <mat-form-field class="form-field">
@@ -32,4 +41,3 @@
         </div>
     </form>
 </div>
-

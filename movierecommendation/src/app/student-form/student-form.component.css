@@ -1,73 +1,79 @@
-/* Container for the entire form */
+/* Center the form container */
 .form-container {
-    max-width: 500px;
-    margin: 0 auto;
+    max-width: 600px;
+    margin: auto;
     padding: 20px;
     background-color: #f5f5f5;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-    text-align: center;
 }
 
-/* Header styling */
-.form-header {
-    background-color: #4a6fa5;
-    color: white;
-    padding: 10px;
-    border-radius: 8px 8px 0 0;
-}
-
+/* Center-align and style the heading */
 .form-header h4 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
     margin: 0;
-    font-weight: normal;
+    padding: 10px 0;
 }
 
-/* Row layout for two fields in one line */
+/* Align action buttons in the center */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* Style for Edit and Delete buttons */
+.edit-button {
+    background-color: #4CAF50; /* Green color for Edit */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.delete-button {
+    background-color: #f44336; /* Red color for Delete */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+/* Form row layout */
 .form-row {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
-/* Form fields styling */
-.form-field {
-    flex: 1;
-    margin: 0 5px;
-}
-
-/* Make certain fields span the full width */
+/* Full-width input fields */
 .full-width {
     width: 100%;
-    margin-bottom: 20px;
 }
 
-/* Styling for input fields */
-mat-form-field {
-    width: 100%;
-}
-
-input[matInput] {
-    padding: 8px;
-    font-size: 16px;
+/* Mat-form-field styling */
+.form-field {
+    flex: 1;
 }
 
 /* Submit button styling */
 .submit-button {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
 }
 
-button {
-    width: 100px;
-    padding: 10px;
-    background-color: #f0ad4e;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
+.submit-button button {
+    padding: 10px 20px;
     font-size: 16px;
-}
-
-button:hover {
-    background-color: #ec971f;
+    text-transform: uppercase;
 }

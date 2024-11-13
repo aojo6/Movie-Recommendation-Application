@@ -1,0 +1,104 @@
+/* General page layout */
+.homepage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Title and subtitle */
+.welcome-title {
+    font-size: 2.5em;
+    color: #333;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.subheading {
+    font-size: 1.2em;
+    color: #777;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Navigation menu styling */
+.menu-container {
+    margin-bottom: 40px;
+}
+
+.menu-button {
+    font-size: 1em;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.menu-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+/* Featured section styling */
+.featured-section {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.featured-movie {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.featured-image {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.featured-title {
+    font-size: 1.5em;
+    color: #333;
+    margin: 10px 0;
+}
+
+.featured-description {
+    font-size: 1em;
+    color: #666;
+}
+
+/* Styling for app-navigation-menu component */
+app-navigation-menu {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+app-navigation-menu button {
+    font-size: 1em;
+    color: #007bff;
+    margin: 0 10px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    padding: 10px;
+    transition: color 0.3s ease;
+}
+
+app-navigation-menu button:hover {
+    color: #cd5252;
+}

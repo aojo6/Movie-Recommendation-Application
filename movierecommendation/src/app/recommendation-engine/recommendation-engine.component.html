@@ -1,1 +1,50 @@
-<p>recommendation-engine works!</p>
+<h1>Movie Recommendation System</h1>
+
+<div>
+  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu #menu="matMenu">
+  <button mat-menu-item routerLink="/home">Homepage</button>
+  <button mat-menu-item routerLink="/trailer">Movie Database</button>
+  <button mat-menu-item routerLink="/recommendation">Recommendation Engine</button>
+  <button mat-menu-item routerLink="/reviews">Reviews</button>
+  <button mat-menu-item routerLink="/trailer">Trailer</button>
+  </mat-menu>
+</div>
+
+
+
+<div class="container">
+  <h2>Recommendation Engine</h2>
+  <p>Please select a genre and director:</p>
+  <form (ngSubmit)="savePreferences()">
+    <div>
+      <label for="genre">Favorite Genre:</label>
+      <select id="genre" [(ngModel)]="userPreferences.genre" name="genre">
+        <option *ngFor="let genre of genres">{{ genre }}</option>
+      </select>
+    </div>
+    <br>
+    <div>
+      <label for="director">Favorite Director:</label>
+      <select id="director" [(ngModel)]="userPreferences.director" name="director">
+      <option *ngFor="let director of directors" [value]="director">{{ director }}</option>
+      </select>
+    </div>
+    <br>
+
+      <button type="submit">Save Preferences</button>
+      <button type="button" (click)="updatePreferences()">Update Preferences</button>
+      <button type="button" (click)="deletePreferences()">Delete Preferences</button>
+    </form>
+
+    <div *ngIf="notificationMessage" class="notification">
+    {{ notificationMessage }}
+  </div>
+    
+    <div *ngFor="let movie of recommendations">
+      <h3>Title: {{ movie.title }}</h3>
+      <p>Genre: {{ movie.genre }}</p>
+      <p>Director: {{ movie.director }}</p>
+    </div>
+</div>
+

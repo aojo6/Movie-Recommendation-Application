@@ -4,6 +4,17 @@ body {margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+body {
+  background-image: url('./assets/img/bgpic.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Temporarily comment these out */
+  background-color: rgba(255, 255, 255, 0.5); 
+  background-blend-mode: overlay; 
+}
+
+
 
 /* Container for the entire page */
 .container {
@@ -18,7 +29,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
   /* Styling for headers*/
   
-  h2, h3 {
+  h1, h2, h3 {
     text-align: center;
     color: black;
     margin-bottom: 20px;
@@ -99,5 +110,51 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
   
 
+  .edit-form {
+    max-width: 400px;
+    margin: auto;
+    background-color: #f7eaea;
+    padding: 20px;
+    border-radius: 8px;
+  }
+
+  .form-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .form-group label {
+    width: 30%;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .form-group input {
+    width: 65%;
+    padding: 5px;
+  }
+
+  .save-button, .cancel-button {
+    padding: 8px 12px;
+    margin: 10px 5px 0 0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  .save-button {
+    background-color: #28a745;
+  }
+
+  .cancel-button {
+    background-color: #dc3545;
+  }
+
+  .save-button:hover, .cancel-button:hover {
+    opacity: 0.9;
+  }
   
   

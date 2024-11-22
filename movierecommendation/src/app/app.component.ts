@@ -1,17 +1,20 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 import { NavigationMenuComponent } from './navigation-menu/navigation-menu.component';
-import { TrailerComponent } from './trailer/trailer.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet, 
-    NavigationMenuComponent, 
-    TrailerComponent, 
-    HttpClientModule],
+    RouterModule,
+    MatMenuModule,
+    MatButtonModule,
+    NavigationMenuComponent,
+    HttpClientModule,
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

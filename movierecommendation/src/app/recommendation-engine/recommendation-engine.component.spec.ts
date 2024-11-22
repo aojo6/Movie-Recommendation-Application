@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecommendationEngineComponent } from './recommendation-engine.component';
+import {RecommendationEngineComponent } from './recommendation-engine.component';
+
 
 describe('RecommendationEngineComponent', () => {
   let component: RecommendationEngineComponent;
@@ -8,9 +9,8 @@ describe('RecommendationEngineComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RecommendationEngineComponent]
-    })
-    .compileComponents();
+      imports: [RecommendationEngineComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RecommendationEngineComponent);
     component = fixture.componentInstance;

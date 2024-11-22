@@ -1,1 +1,72 @@
-<p>reviews works!</p>
+<h1>Movie Recommendation System</h1>
+
+<div>
+    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+    <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/home">Homepage</button>
+    <button mat-menu-item routerLink="/student-form">Movie Database</button>
+    <button mat-menu-item routerLink="/recommendation">Recommendation Engine</button>
+    <button mat-menu-item routerLink="/reviews">Reviews</button>
+    <button mat-menu-item routerLink="/trailer">Trailer</button>
+    </mat-menu>
+  </div>
+  
+<br>
+<div class="container">
+    <h2>{{formName}}</h2>
+    <p>Please Select a Rating and Enter a Review</p>
+
+    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+        <label for="username">Username: </label>
+        <input id="username" type="text" formControlName="username">
+    <br><br>
+        <label for="movie">Movie Name: </label>
+        <input id="movie" type="text" formControlName="movie">
+    <br><br>
+    <div>
+        <label>Rating:</label>
+
+        <input id="one" type="radio" value="1" formControlName="rating">
+        <label for="1">1</label>
+        
+        <input id="two" type="radio" value="2" formControlName="rating">
+        <label for="2">2</label>
+    
+        <input id="three" type="radio" value="3" formControlName="rating">
+        <label for="3">3</label>
+        
+        <input id="four" type="radio" value="4" formControlName="rating">
+        <label for="4">4</label>
+        
+        <input id="five" type="radio" value="5" formControlName="rating">
+        <label for="5">5</label>
+        
+    </div>
+    <br><br>
+
+        <label for="review">Review: </label>
+        <input id="review" type="text" formControlName="review">
+    <br><br>
+    <div class="submitbutton">
+    <button type="submit">Submit</button>
+    </div>
+    </form>
+    <br><br>
+
+    <button type="button" (click)="updateEntry()">Update Entry</button>
+    <button type="button" (click)="retrieveEntry()">Search</button>
+
+    <button type="button" (click)="deleteEntry()">Delete Entry</button>
+    <button type="reset" (click)="resetEntry()"> Reset </button>
+
+
+</div>
+
+
+
+
+
+
+
+
+

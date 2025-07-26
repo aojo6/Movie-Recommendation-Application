@@ -1,134 +1,121 @@
-import { Component } from '@angular/core';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
+import { Component, OnInit } from '@angular/core';
+import { TrailerService } from '../trailer/trailer.service';
+import { NavigationMenuComponent } from '../navigation-menu/navigation-menu.component';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
-import { FormGroup } from '@angular/forms';
-import { FormControl } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { Validators } from '@angular/forms';
-import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-reviews',
   standalone: true,
   imports: [
-    FormsModule, 
-    HttpClientModule, 
-    ReactiveFormsModule,
     CommonModule,
-    MatMenuModule,
-    MatButtonModule,
-    RouterModule 
+    RouterModule,
+    NavigationMenuComponent,
+    FormsModule,
   ],
   templateUrl: './reviews.component.html',
-  styleUrl: './reviews.component.css'
+  styleUrls: ['./reviews.component.css'],
 })
-
-export class ReviewsComponent implements OnInit{
+export class ReviewsComponent implements OnInit {
   formName = 'Ratings and Reviews';
-  projectForm!: FormGroup;
-  ReviewsList: any[] = [];
+  trailers: any[] = [];
+  selectedMovie: string = '';
+  selectedTrailer: any = null;
 
-  constructor(private formBuilder: FormBuilder) {
+  // Temporary variables for binding
+  selectedRating: any = null;
+  selectedReview: string = '';
+
+  constructor(private trailerService: TrailerService) {}
+
+  ngOnInit(): void {
+    // Load trailers
+    this.loadTrailers();
   }
 
-ngOnInit(): void {
-this.projectForm = this.formBuilder.group({
-  username: ['', Validators.required],
-  movie: ['', Validators.required],
-  rating: ['', Validators.required],
-  review: ['', Validators.required],
-  });
-  
-}
- 
-onSubmit(){
-  if (this.projectForm.valid){
-  console.warn("Form Submitted: ", this.projectForm.value);
-  const ReviewEntry= {...this.projectForm.value };
-  this.ReviewsList.push(ReviewEntry);
-  this.projectForm.reset({
-    username: '',
-    movie: '',
-    rating: null,
-    review: ''
-  });
-  alert('Review Added Successfully!');
-}
-  else { alert('Review Not Added. Please Try Again.');
-  }
-}
-
-retrieveEntry(){
-  const username = this.projectForm.get('username')?.value;
-  const movie = this.projectForm.get('movie')?.value;
-
-  const ReviewExists = this.ReviewsList.find(review => review.username === 
-    username && review.movie === movie);
-
-  if (ReviewExists) {
-  this.projectForm.patchValue({
-    username: ReviewExists.username,
-    movie: ReviewExists.movie,
-    rating: ReviewExists.rating,
-    review: ReviewExists.review
-  });
-  }
-
-  else {
-    alert('No Review Found.');
-  }
-};
-
-updateEntry() {
-  const username = this.projectForm.get('username')?.value;
-  const movie = this.projectForm.get ('movie')?.value;
-  const ReviewExists = this.ReviewsList.find(review => review.username === 
-    username && review.movie === movie);
-    
-  if (ReviewExists){
-    ReviewExists.rating = this.projectForm.get('rating')?.value;
-    ReviewExists.review = this.projectForm.get('review')?.value;
-    alert("Update Successful!")
-    this.projectForm.reset({
-      username: '',
-      movie: '',
-      rating: null,
-      review: ''
+  loadTrailers(): void {
+    this.trailerService.getTrailers().subscribe({
+      next: (trailers) => {
+        this.trailers = trailers;
+      },
+      error: (err) => {
+        console.error('Error loading trailers:', err);
+      },
     });
   }
-}
 
-
-deleteEntry(){
-  const username = this.projectForm.get('username')?.value;
-  const movie = this.projectForm.get('movie')?.value;
-
-  const index = this.ReviewsList.findIndex(review => review.username ===
-    username && review.movie === movie);
-
-  if (index !== -1) {
-    this.ReviewsList.splice(index, 1);
-    this.projectForm.reset({
-      username: '',
-      movie: '',
-      rating: null,
-      review: ''
-      });
-    alert("Review Entry Deleted!")
+  onMovieSelect(): void {
+    this.selectedTrailer = this.trailers.find(
+      (trailer) => trailer.movie_Name === this.selectedMovie
+    );
+  
+    if (this.selectedTrailer) {
+      // Populate Ratings and Reviews
+      if (!this.selectedTrailer.Ratings) {
+        this.selectedRating = null; // Default to 1 if no rating exists
+      } else {
+        this.selectedRating = +this.selectedTrailer.Ratings; // Ensure Ratings is a number
+      }
+  
+      this.selectedReview = this.selectedTrailer.reviews || ''; // Default Reviews to an empty string if undefined
     }
-}
+  }
+  
 
-resetEntry(){
-  this.projectForm.reset({
-    username: '',
-    movie: '',
-    rating: null,
-    review: ''
-  });
-}
+  onSubmit(): void {
+    if (!this.selectedTrailer) {
+      alert('Please select a movie to update.');
+      return;
+    }
+
+    // Prepare updated trailer data
+    const updatedTrailer = {
+      ...this.selectedTrailer,
+      Ratings: this.selectedRating,
+      reviews: this.selectedReview,
+    };
+
+    this.trailerService.updateTrailerLink(this.selectedTrailer._id, updatedTrailer).subscribe({
+      next: () => {
+        alert('Review updated successfully!');
+        this.loadTrailers(); 
+        this.resetForm();
+      },
+      error: (err) => {
+        console.error('Error updating trailer:', err);
+      },
+    });
+  }
+
+  deleteEntry(): void {
+    if (!this.selectedTrailer) {
+      alert('Please select a movie to delete the review.');
+      return;
+    }
+
+    const updatedTrailer = {
+      ...this.selectedTrailer,
+      Ratings: null,
+      reviews: '',
+    };
+
+    this.trailerService.updateTrailerLink(this.selectedTrailer._id, updatedTrailer).subscribe({
+      next: () => {
+        alert('Review deleted successfully!');
+        this.loadTrailers(); 
+        this.resetForm();
+      },
+      error: (err) => {
+        console.error('Error deleting review:', err);
+      },
+    });
+  }
+
+  resetForm(): void {
+    this.selectedMovie = '';
+    this.selectedTrailer = null;
+    this.selectedRating = null;
+    this.selectedReview = '';
+  }
 }

@@ -1,72 +1,66 @@
 <h1>Movie Recommendation System</h1>
+<app-navigation-menu></app-navigation-menu>
 
-<div>
-    <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-    <mat-menu #menu="matMenu">
-    <button mat-menu-item routerLink="/home">Homepage</button>
-    <button mat-menu-item routerLink="/student-form">Movie Database</button>
-    <button mat-menu-item routerLink="/recommendation">Recommendation Engine</button>
-    <button mat-menu-item routerLink="/reviews">Reviews</button>
-    <button mat-menu-item routerLink="/trailer">Trailer</button>
-    </mat-menu>
-  </div>
-  
-<br>
 <div class="container">
-    <h2>{{formName}}</h2>
-    <p>Please Select a Rating and Enter a Review</p>
+  <h2>{{ formName }}</h2>
+  <p>Select a movie, provide a rating, and share your review.</p>
 
-    <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-        <label for="username">Username: </label>
-        <input id="username" type="text" formControlName="username">
-    <br><br>
-        <label for="movie">Movie Name: </label>
-        <input id="movie" type="text" formControlName="movie">
-    <br><br>
-    <div>
-        <label>Rating:</label>
-
-        <input id="one" type="radio" value="1" formControlName="rating">
-        <label for="1">1</label>
-        
-        <input id="two" type="radio" value="2" formControlName="rating">
-        <label for="2">2</label>
-    
-        <input id="three" type="radio" value="3" formControlName="rating">
-        <label for="3">3</label>
-        
-        <input id="four" type="radio" value="4" formControlName="rating">
-        <label for="4">4</label>
-        
-        <input id="five" type="radio" value="5" formControlName="rating">
-        <label for="5">5</label>
-        
+  <!-- Review Form -->
+  <form #reviewForm="ngForm" (ngSubmit)="onSubmit()" class="review-form">
+    <!-- Movie Dropdown -->
+    <div class="form-group">
+      <label for="movie">Movie Name:</label>
+      <select
+        id="movie"
+        name="movie"
+        [(ngModel)]="selectedMovie"
+        (change)="onMovieSelect()"
+        required
+      >
+        <option value="" disabled>Select a Movie</option>
+        <option *ngFor="let movie of trailers" [value]="movie.movie_Name">
+          {{ movie.movie_Name }}
+        </option>
+      </select>
     </div>
-    <br><br>
+    <br />
 
-        <label for="review">Review: </label>
-        <input id="review" type="text" formControlName="review">
-    <br><br>
-    <div class="submitbutton">
-    <button type="submit">Submit</button>
+    <!-- Ratings -->
+    <div class="form-group">
+      <label for="ratings">Ratings:</label>
+      <div class="rating-options">
+        <label *ngFor="let rating of [1, 2, 3, 4, 5]">
+          <input
+            type="radio"
+            name="ratings"
+            [value]="rating"
+            [(ngModel)]="selectedRating"
+            required
+          />
+          {{ rating }}
+        </label>
+      </div>
     </div>
-    </form>
-    <br><br>
 
-    <button type="button" (click)="updateEntry()">Update Entry</button>
-    <button type="button" (click)="retrieveEntry()">Search</button>
+    <!-- Review Textarea -->
+    <div class="form-group">
+      <label for="review">Review:</label>
+      <textarea
+        id="review"
+        name="review"
+        [(ngModel)]="selectedReview"
+        placeholder="Write your review here"
+        rows="4"
+        cols="50"
+        required
+      ></textarea>
+    </div>
 
-    <button type="button" (click)="deleteEntry()">Delete Entry</button>
-    <button type="reset" (click)="resetEntry()"> Reset </button>
-
-
+    <!-- Action Buttons -->
+    <div class="button-group">
+      <button type="submit" [disabled]="!reviewForm.valid">Submit</button>
+      <button class="delete-button" type="button" (click)="deleteEntry()">Delete Entry</button>
+      <button type="button" (click)="resetForm()">Reset</button>
+    </div>
+  </form>
 </div>
-
-
-
-
-
-
-
-
-

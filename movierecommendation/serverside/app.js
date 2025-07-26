@@ -47,6 +47,7 @@ app.post('/api/trailers', (req, res) => {
         Year: req.body.Year || 'Unknown',
         author: req.body.author || 'Unknown',
         Ratings: req.body.Ratings || 'N/A',
+        reviews: req.body.reviews || 'N/A',
         trailerLink: req.body.trailerLink,
     });
 
@@ -72,6 +73,7 @@ app.put('/api/trailers/:id', (req, res) => {
                 Year: req.body.Year,
                 author: req.body.author,
                 Ratings: req.body.Ratings,
+                reviews: req.body.reviews,
                 trailerLink: req.body.trailerLink,
             },
             { new: true }

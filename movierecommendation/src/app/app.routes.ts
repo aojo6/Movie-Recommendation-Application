@@ -4,19 +4,16 @@ import { TrailerComponent } from './trailer/trailer.component';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { RecommendationEngineComponent } from './recommendation-engine/recommendation-engine.component';
 import { provideHttpClient } from '@angular/common/http';
-import { StudentFormComponent } from './student-form/student-form.component';
-import { ListStudentsComponent } from './list-students/list-students.component';
+import { SavedMoviesComponent } from './saved-movies/saved-movies.component';
 
 
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'trailer', component: TrailerComponent },
   { path: 'reviews', component: ReviewsComponent },
-  { path: 'recommendation', component: RecommendationEngineComponent },
-  { path: 'student-form', component: StudentFormComponent },
-  { path: 'list-students', component: ListStudentsComponent},
-  
-  { path: '**', redirectTo: '' },
+  { path: 'recommendation', component: RecommendationEngineComponent }, 
+  { path: 'saved-movies', component: SavedMoviesComponent},
+  { path: '**', redirectTo: 'home' },
 ];
 
 export const APP_PROVIDERS = [

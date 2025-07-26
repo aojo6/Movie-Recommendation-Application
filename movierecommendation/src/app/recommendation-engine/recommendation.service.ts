@@ -1,41 +1,37 @@
 import { Injectable } from '@angular/core';
-import { UserPreferences } from './user-preferences.model';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root', 
+  providedIn: 'root',
 })
 export class RecommendationService {
-  private userPreferences: UserPreferences | null = null;
+  private apiKey = 'f9a97b8def4784a501adfb350943b8ca'; 
+  private baseUrl = 'https://api.themoviedb.org/3';
+  private imageBaseUrl = 'https://image.tmdb.org/t/p/w500';
 
-  private movies = [
-    { title: 'Million Dollar Baby', genre: 'Drama', director: 'Clint Eastwood' },
-    { title: 'Gran Torino', genre: 'Drama', director: 'Clint Eastwood' },
-    { title: 'The Dark Knight', genre: 'Action', director: 'Christopher Nolan' },
-    { title: "She's gotta have it", genre: 'Comedy', director: 'Spike Lee' },
-    { title: 'Inception', genre: 'Action', director: 'Christopher Nolan' },
-    { title: 'Pulp Fiction', genre: 'Drama', director: 'Quentin Tarantino' },
-    { title: 'Kill Bill', genre: 'Action', director: 'Quentin Tarantino' },
-    { title: 'Lady Bird', genre: 'Drama', director: 'Greta Gerwig' },
-    { title: 'Little Women', genre: 'Drama', director: 'Greta Gerwig' },
-    { title: 'The Irishman', genre: 'Drama', director: 'Martin Scorsese' }
-  ];
+  constructor(private http: HttpClient) {}
 
-  saveUserPreferences(preferences: UserPreferences) {
-    this.userPreferences = preferences;
+  getPopularMovies(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/movie/popular?api_key=${this.apiKey}`);
+
   }
 
-  getRecommendations(preferences: UserPreferences) {
-    return this.movies.filter(movie => 
-      movie.genre === preferences.genre || movie.director === preferences.director
-    );
+  getMovieCredits(movieId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/movie/${movieId}/credits?api_key=${this.apiKey}`);
   }
 
-  updateUserPreferences(preferences: UserPreferences) {
-    this.userPreferences = preferences;
+  getRecommendationsByPreferences(
+    genre: number | null,
+    director: number | null,
+    yearFilter: string
+  ): Observable<any[]> {
+    let genreParam = genre ? `&with_genres=${genre}` : '';
+    let directorParam = director ? `&with_crew=${director}` : '';
+    const url = `${this.baseUrl}/discover/movie?api_key=${this.apiKey}${genreParam}${directorParam}${yearFilter}`;
+    
+    console.log('Request URL:', url); 
+    return this.http.get<any[]>(url);
   }
-
-  deleteUserPreferences() {
-    this.userPreferences = null;
-  }
+  
 }

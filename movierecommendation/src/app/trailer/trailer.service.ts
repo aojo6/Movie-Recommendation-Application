@@ -37,4 +37,13 @@ export class TrailerService {
   deleteTrailerLink(trailerId: string): Observable<any> {
     return this.http.delete(`${this.backendUrl}/${trailerId}`);
   }
+
+  getTrailerByMovieName(movieName: string) {
+    return this.http.get(`/api/trailers?movie_Name=${movieName}`); // Optional if needed
+  }
+  
+  updateTrailerReview(trailerId: string, updatedData: any): Observable<any> {
+    return this.http.put(`${this.backendUrl}/${trailerId}`, updatedData);
+  }
+
 }
